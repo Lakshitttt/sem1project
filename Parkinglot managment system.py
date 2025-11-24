@@ -22,12 +22,11 @@ def blankscreen():
 def print_header():
     print("=" * 60)
     print("🚗  PARKING LOT MANAGEMENT SYSTEM  🚗".center(60))
-    print("=" * 60)
     print()
 
 
 def parkinglotscreen():
-    print("\n📍 PARKING LOT LAYOUT:")
+    print("\n PARKING LOT LAYOUT:")
     print("-" * 60)
     
     for row in parking_lot:
@@ -44,7 +43,6 @@ def parkinglotscreen():
         
         print("    ".join(row_display))
     
-    print("-" * 60)
     print("Legend: ✓ = Available  |  ✗ = Occupied")
     print()
 
@@ -77,14 +75,14 @@ def showavailableslots():
     available = blankslots()
     
     if available:
-        print(f"\n✅ AVAILABLE SLOTS ({len(available)}/25):")
+        print(f"\n AVAILABLE SLOTS ({len(available)}/25):")
         print("-" * 60)
         
         for i in range(0, len(available), 5):
             print("  ".join(available[i:i+5]))
         print()
     else:
-        print("\n❌ No slots available! Parking lot is full.\n")
+        print("\n Parking lot is full,better luck next time bae\n")
     
     return available
 
@@ -108,7 +106,7 @@ def auto_checkout(slot_id):
         
         del bookings[slot_id]
         
-        print(f"✅ Auto-checkout: Slot {slot_id} | Vehicle {booking['vehicle']} | Fee: ${fee:.2f}")
+        print(f" Auto-checkout: Slot {slot_id} | Vehicle {booking['vehicle']} | Fee: ${fee:.2f}")
 
 
 def bookingslot():
@@ -119,24 +117,24 @@ def bookingslot():
     available = showavailableslots()
     
     if not available:
-        input("\nPress Enter to return to main menu...")
+        input("\nPress Enter to return to main menu")
         return
     
-    print("\n📝 BOOK A PARKING SLOT")
+    print("\nBOOK A PARKING SLOT")
     print("-" * 60)
     
     while True:
         slot_id = input("Enter slot ID (e.g., A1, B3): ").strip().upper()
         
         if not slot_id:
-            print("❌ Slot ID cannot be empty!")
+            print(" Slot ID cannot be empty!")
             continue
         
         if slot_id not in available:
             if any(slot_id in row for row in parking_lot):
-                print(f"❌ Slot {slot_id} is already occupied!")
+                print(f"Slot {slot_id} is already occupied!")
             else:
-                print(f"❌ Invalid slot ID! Choose from available slots.")
+                print(f" Invalid slot ID! Choose from available slots.")
             continue
         
         break
@@ -145,20 +143,20 @@ def bookingslot():
         vehicle = input("Enter vehicle number: ").strip().upper()
         if vehicle:
             break
-        print("❌ Vehicle number cannot be empty!")
+        print(" Vehicle number cannot be empty,dumbooo!")
     
     while True:
         try:
             duration = float(input("Enter parking duration (in hours): "))
             if duration <= 0:
-                print("❌ Duration must be greater than 0!")
+                print(" Duration must be greater than 0 you fool!")
                 continue
             if duration > 24:
-                print("❌ Maximum parking duration is 24 hours!")
+                print(" Maximum parking duration is 24 hours, babe!")
                 continue
             break
         except ValueError:
-            print("❌ Please enter a valid number!")
+            print(" Please enter a valid number!")
     
     booked_at = datetime.now()
     checkout_time = booked_at + timedelta(hours=duration)
@@ -174,7 +172,7 @@ def bookingslot():
     
     blankscreen()
     print_header()
-    print("\n✅ BOOKING SUCCESSFUL!")
+    print("\n BOOKING SUCCESSFUL!")
     print("=" * 60)
     print(f"Slot ID:           {slot_id}")
     print(f"Vehicle Number:    {vehicle}")
@@ -183,7 +181,7 @@ def bookingslot():
     print(f"Duration:          {duration} hours")
     print(f"Parking Fee:       ${fee:.2f}")
     print("=" * 60)
-    print("\n💡 Your slot will automatically become available after checkout time.")
+    print("\n Slot will automatically become available after checkout")
     
     input("\nPress Enter to return to main menu...")
 
@@ -194,11 +192,9 @@ def view_current_bookings():
     
     occupied = get_occupied_slots()
     
-    print("\n🅿️  CURRENT BOOKINGS")
-    print("=" * 60)
-    
+    print("\n  CURRENT BOOKINGS")    
     if not occupied:
-        print("No active bookings at the moment.")
+        print("No active bookings at moment.")
     else:
         print(f"Total Occupied Slots: {len(occupied)}/25\n")
         
@@ -218,8 +214,7 @@ def view_current_bookings():
             print(f"  Time Remaining: {hours_remaining:.2f} hours")
             print()
     
-    print("=" * 60)
-    input("\nPress Enter to return to main menu...")
+    input("\nPress Enter to return to main menu ")
 
 
 def main_menu():
@@ -232,7 +227,7 @@ def main_menu():
         occupied = len(get_occupied_slots())
         
         print(f"Available: {available}/25  |  Occupied: {occupied}/25  |  Total Revenue: ${total_revenue:.2f}")
-        print("\n📋 MAIN MENU")
+        print("\n MAIN MENU")
         print("=" * 60)
         print("1. Book a Parking Slot")
         print("2. View Current Bookings")
@@ -248,13 +243,13 @@ def main_menu():
         elif choice == '3':
             blankscreen()
             print_header()
-            print("\n👋 Thank you for using Parking Lot Management System!")
-            print(f"💰 Total Revenue Collected: ${total_revenue:.2f}")
+            print("\n Thank you for using Parking Lot Management System!, visit us soon\n")
+            print(f" Total Revenue Collected: rupee {total_revenue:.2f}")
             print("=" * 60)
             print()
             break
         else:
-            print("\n❌ Invalid choice! Please enter a number between 1-3.")
+            print("\n Invaalid choice! Please enter a number between 1-3.")
             time.sleep(1.5)
 
 if __name__ == "__main__":
@@ -262,8 +257,8 @@ if __name__ == "__main__":
         main_menu()
     except KeyboardInterrupt:
         blankscreen()
-        print("\n\n👋 Application closed. Goodbye!\n")
+        print("\n\n Application closed. Goodbye!\n")
     except Exception as e:
-        print(f"\n❌ An error occurred: {e}")
+        print(f"\n An error occurred: {e}")
         input("\nPress Enter to exit...")
         
