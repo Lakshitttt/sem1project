@@ -20,7 +20,6 @@ def blankscreen():
 
 
 def print_header():
-    print("=" * 60)
     print("🚗  PARKING LOT MANAGEMENT SYSTEM  🚗".center(60))
     print()
 
