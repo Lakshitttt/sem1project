@@ -2,7 +2,7 @@ import os
 import time
 from datetime import datetime, timedelta
 
-parking_lot = [
+p_lot = [
     ['A1', 'A2', 'A3', 'A4', 'A5'],
     ['B1', 'B2', 'B3', 'B4', 'B5'],
     ['C1', 'C2', 'C3', 'C4', 'C5'],
@@ -28,17 +28,17 @@ def parkinglotscreen():
     print("\n PARKING LOT LAYOUT:")
     print("-" * 60)
     
-    for row in parking_lot:
+    for row in p_lot:
         row_display = []
-        for slot in row:
-            if slot in bookings:
-                if datetime.now() >= bookings[slot]['checkout_time']:
-                    auto_checkout(slot)
-                    row_display.append(f"[{slot}✓]")  
+        for sloot in row:
+            if sloot in bookings:
+                if datetime.now() >= bookings[sloot]['checkout_time']:
+                    auto_checkout(sloot)
+                    row_display.append(f"[{sloot}✓]")  
                 else:
-                    row_display.append(f"[{slot}✗]")  
+                    row_display.append(f"[{sloot}✗]")  
             else:
-                row_display.append(f"[{slot}✓]")
+                row_display.append(f"[{sloot}✓]")
         
         print("    ".join(row_display))
     
@@ -46,35 +46,35 @@ def parkinglotscreen():
     print()
 
 
-def blankslots():
+def blanksloots():
     available = []
     
-    for row in parking_lot:
-        for slot in row:
-            if slot not in bookings:
-                available.append(slot)
-            elif datetime.now() >= bookings[slot]['checkout_time']:
-                auto_checkout(slot)
-                available.append(slot)
+    for row in p_lot:
+        for sloot in row:
+            if sloot not in bookings:
+                available.append(sloot)
+            elif datetime.now() >= bookings[sloot]['checkout_time']:
+                auto_checkout(sloot)
+                available.append(sloot)
     
     return available
 
 
-def get_occupied_slots():
+def get_occupied_sloots():
     occupied = []
     
-    for slot in bookings:
-        if datetime.now() < bookings[slot]['checkout_time']:
-            occupied.append(slot)
+    for sloot in bookings:
+        if datetime.now() < bookings[sloot]['checkout_time']:
+            occupied.append(sloot)
     
     return occupied
 
 
-def showavailableslots():
-    available = blankslots()
+def showavailablesloots():
+    available = blanksloots()
     
     if available:
-        print(f"\n AVAILABLE SLOTS ({len(available)}/25):")
+        print(f"\n AVAILABLE slootS ({len(available)}/25):")
         print("-" * 60)
         
         for i in range(0, len(available), 5):
@@ -93,56 +93,56 @@ def calculate_fee(duration):
         return (3 * 5) + ((duration - 3) * 3)
 
 
-def auto_checkout(slot_id):
+def auto_checkout(sloot_id):
     global total_revenue
     
-    if slot_id in bookings:
-        booking = bookings[slot_id]
+    if sloot_id in bookings:
+        booking = bookings[sloot_id]
         duration = booking['duration']
         fee = calculate_fee(duration)
         
         total_revenue += fee
         
-        del bookings[slot_id]
+        del bookings[sloot_id]
         
-        print(f" Auto-checkout: Slot {slot_id} | Vehicle {booking['vehicle']} | Fee: ${fee:.2f}")
+        print(f" Auto-checkout: sloot {sloot_id} | vehicel {booking['vehicel']} | Fee: ${fee:.2f}")
 
 
-def bookingslot():
+def bookingsloot():
     blankscreen()
     print_header()
     parkinglotscreen()
     
-    available = showavailableslots()
+    available = showavailablesloots()
     
     if not available:
         input("\nPress Enter to return to main menu")
         return
     
-    print("\nBOOK A PARKING SLOT")
+    print("\nBOOK A PARKING slot")
     print("-" * 60)
     
     while True:
-        slot_id = input("Enter slot ID (e.g., A1, B3): ").strip().upper()
+        sloot_id = input("Enter slot ID (e.g., A1, B3): ").strip().upper()
         
-        if not slot_id:
-            print(" Slot ID cannot be empty!")
+        if not sloot_id:
+            print(" sloot ID cannot be empty!")
             continue
         
-        if slot_id not in available:
-            if any(slot_id in row for row in parking_lot):
-                print(f"Slot {slot_id} is already occupied!")
+        if sloot_id not in available:
+            if any(sloot_id in row for row in p_lot):
+                print(f"sloot {sloot_id} is already occupied!")
             else:
-                print(f" Invalid slot ID! Choose from available slots.")
+                print(f" Invalid sloot ID! Choose from available sloots.")
             continue
         
         break
     
     while True:
-        vehicle = input("Enter vehicle number: ").strip().upper()
-        if vehicle:
+        vehicel = input("Enter vehicel number: ").strip().upper()
+        if vehicel:
             break
-        print(" Vehicle number cannot be empty,dumbooo!")
+        print(" vehicel number cannot be empty,dumbooo!")
     
     while True:
         try:
@@ -162,8 +162,8 @@ def bookingslot():
     
     fee = calculate_fee(duration)
     
-    bookings[slot_id] = {
-        'vehicle': vehicle,
+    bookings[sloot_id] = {
+        'vehicel': vehicel,
         'booked_at': booked_at,
         'checkout_time': checkout_time,
         'duration': duration
@@ -173,14 +173,14 @@ def bookingslot():
     print_header()
     print("\n BOOKING SUCCESSFUL!")
     print("=" * 60)
-    print(f"Slot ID:           {slot_id}")
-    print(f"Vehicle Number:    {vehicle}")
+    print(f"sloot ID:           {sloot_id}")
+    print(f"vehicel Number:    {vehicel}")
     print(f"Booked At:         {booked_at.strftime('%Y-%m-%d %I:%M:%S %p')}")
     print(f"Checkout Time:     {checkout_time.strftime('%Y-%m-%d %I:%M:%S %p')}")
     print(f"Duration:          {duration} hours")
     print(f"Parking Fee:       ${fee:.2f}")
     print("=" * 60)
-    print("\n Slot will automatically become available after checkout")
+    print("\n sloot will automatically become available after checkout")
     
     input("\nPress Enter to return to main menu...")
 
@@ -189,31 +189,31 @@ def view_current_bookings():
     blankscreen()
     print_header()
     
-    occupied = get_occupied_slots()
+    occupied = get_occupied_sloots()
     
     print("\n  CURRENT BOOKINGS")    
     if not occupied:
         print("No active bookings at moment.")
     else:
-        print(f"Total Occupied Slots: {len(occupied)}/25\n")
+        print(f"Total Occupied sloots: {len(occupied)}/25\n")
         
-        for slot in occupied:
-            booking = bookings[slot]
-            vehicle = booking['vehicle']
+        for sloot in occupied:
+            booking = bookings[sloot]
+            vehicel = booking['vehicel']
             booked_at = booking['booked_at']
             checkout_time = booking['checkout_time']
             
             time_remaining = checkout_time - datetime.now()
             hours_remaining = time_remaining.total_seconds() / 3600
             
-            print(f"Slot {slot}:")
-            print(f"  Vehicle: {vehicle}")
-            print(f"  Booked At: {booked_at.strftime('%I:%M %p')}")
-            print(f"  Checkout At: {checkout_time.strftime('%I:%M %p')}")
-            print(f"  Time Remaining: {hours_remaining:.2f} hours")
+            print(f"sloot {sloot}:")
+            print(f"  vehicel: {vehicel}")
+            print(f"  Bookeed At: {booked_at.strftime('%I:%M %p')}")
+            print(f"  Checkoutt At: {checkout_time.strftime('%I:%M %p')}")
+            print(f"  Time Remainingg: {hours_remaining:.2f} hours")
             print()
     
-    input("\nPress Enter to return to main menu ")
+    input("\nPress enter to return to main menu ")
 
 
 def main_menu():
@@ -222,24 +222,24 @@ def main_menu():
         print_header()
         parkinglotscreen()
         
-        available = len(blankslots())
-        occupied = len(get_occupied_slots())
+        available = len(blanksloots())
+        occupied = len(get_occupied_sloots())
         
         print(f"Available: {available}/25  |  Occupied: {occupied}/25  |  Total Revenue: ${total_revenue:.2f}")
         print("\n MAIN MENU")
         print("=" * 60)
-        print("1. Book a Parking Slot")
+        print("1. Book a parking sloot")
         print("2. View Current Bookings")
         print("3. Exit")
         print("=" * 60)
         
-        choice = input("\nEnter your choice (1-3): ").strip()
+        choce = input("\nEnter your choce (1-3): ").strip()
         
-        if choice == '1':
-            bookingslot()
-        elif choice == '2':
+        if choce == '1':
+            bookingsloot()
+        elif choce == '2':
             view_current_bookings()
-        elif choice == '3':
+        elif choce == '3':
             blankscreen()
             print_header()
             print("\n Thank you for using Parking Lot Management System!, visit us soon\n")
@@ -248,7 +248,7 @@ def main_menu():
             print()
             break
         else:
-            print("\n Invaalid choice! Please enter a number between 1-3.")
+            print("\n Invaalid choce! Please enter a number between 1-3.")
             time.sleep(1.5)
 
 if __name__ == "__main__":
